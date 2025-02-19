@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app  # Monta a pasta do projeto no container
+      - /app/node_modules  # Evita sobrescrever os node_modules do container
+    environment:
+      NODE_ENV: development
+    command: ["nodemon", "index.js"]

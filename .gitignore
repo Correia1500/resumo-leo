@@ -1,0 +1,55 @@
+# 🟢 Node.js (Backend)
+node_modules/
+package-lock.json
+npm-debug.log
+yarn.lock
+yarn-error.log
+
+# 🟣 React (Frontend)
+meu-app/node_modules/
+meu-app/package-lock.json
+meu-app/yarn.lock
+meu-app/build/  # Pasta de build do React (gerada ao rodar npm run build)
+meu-app/public/
+
+
+# 🟡 Docker
+.dockerignore
+docker-compose.override.yml
+*.tar  # Backups de imagens do Docker
+
+# 🔵 Arquivos de ambiente (NUNCA versionar)
+.env
+*.env.local
+.env.development
+.env.production
+.env.test
+
+# 🔥 Logs e arquivos temporários
+logs/
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+debug.log
+.out/
+.tmp/
+
+# 🛠️ Configurações do Editor de Código (VS Code, WebStorm, etc.)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.ps1
+
+# 🗑️ Cache e arquivos de sistema (evitam sujeira no repositório)
+.cache/
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# 📦 Dependências e arquivos de compilação (caso tenha TypeScript ou outras ferramentas)
+dist/
+coverage/
+out/
+build/
