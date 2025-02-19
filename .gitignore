@@ -55,3 +55,6 @@ dist/
 coverage/
 out/
 build/
+
+# 🟠 Ollama
+ollama/

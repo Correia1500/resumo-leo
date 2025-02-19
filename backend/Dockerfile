@@ -14,7 +14,7 @@ RUN npm install && npm install -g nodemon
 COPY . .
 
 # Expor a porta da aplicação
-EXPOSE 3000
+EXPOSE 4000
 
 # Comando para iniciar a aplicação com nodemon
 CMD ["nodemon", "index.js"]
