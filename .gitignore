@@ -1,16 +1,18 @@
 # 🟢 Node.js (Backend)
-node_modules/
-package-lock.json
-npm-debug.log
-yarn.lock
-yarn-error.log
+backend/node_modules/
+backend/package-lock.json
+backend/npm-debug.log
+backend/yarn.lock
+backend/yarn-error.log
+backend/.env
 
 # 🟣 React (Frontend)
 meu-app/node_modules/
 meu-app/package-lock.json
 meu-app/yarn.lock
 meu-app/build/  # Pasta de build do React (gerada ao rodar npm run build)
-meu-app/public/
+meu-app/.env
+
 
 
 # 🟡 Docker
