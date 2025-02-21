@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const pool = require('./db'); // Importa a conexão com o Postgres
+const pool = require('./db'); // Importa a conexão com o PostgreSQL
 require('dotenv').config();
 
 const app = express();
@@ -10,34 +10,28 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Rota de teste
 app.post('/send-message', async (req, res) => {
     try {
-        // 1) Recebe a mensagem do body
         const { userMessage } = req.body;
-        // 2) Chama o n8n via Webhook (exemplo de URL)
-        //    Você deve criar um "Webhook" node no n8n com path: /webhook/chatbot
-        //    Então a URL seria algo como: http://localhost:5678/webhook/chatbot
-        const N8N_WEBHOOK_URL = 'http://n8n:5678/webhook/resumo';
+        
+        // Chamar o n8n
+        const N8N_WEBHOOK_URL = 'http://n8n:5678/webhook-test/resumo';
+        const response = await axios.post(N8N_WEBHOOK_URL, { message: userMessage });
 
-        // 3) Envia payload para o n8n
-        const response = await axios.post(N8N_WEBHOOK_URL, {
-            message: userMessage,
-            // Você pode incluir mais dados aqui (ex: userId, context, etc.)
-        });
-        // 4) Pega a resposta do n8n
-        const n8nResponse = response.data;  // Depende do que seu n8n retorna
-        // Ex: n8n poderia retornar { response: "...texto do flowise..." }
-        res.json({
-            ok: true,
-            botResponse: n8nResponse.response || 'Sem resposta do n8n'
-          });  
+        const botResponse = response.data.text || 'Sem resposta do n8n';
+
+        // Salvar no banco de dados
+        await pool.query(
+            'INSERT INTO messages (user_message, bot_response) VALUES ($1, $2)',
+            [userMessage, botResponse]
+        );
+
+        res.json({ ok: true, botResponse });
     } catch (error) {
-        console.error('Erro ao chamar n8n:', error.message);
-        res.status(500).json({ ok: false, error: 'Falha ao processar a mensagem' });
+        console.error('Erro ao processar mensagem:', error);
+        res.status(500).json({ ok: false, error: 'Erro ao processar a mensagem' });
     }
 });
-
 
 // Rota para testar a conexão com Postgres
 app.get('/test-db', async (req, res) => {
@@ -50,7 +44,18 @@ app.get('/test-db', async (req, res) => {
   }
 });
 
-// Inicia o servidor
+app.get('/messages', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT user_message, bot_response FROM messages ORDER BY created_at DESC'
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Erro ao buscar mensagens:', error);
+    res.status(500).json({ error: 'Erro ao buscar mensagens' });
+  }
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Backend rodando na porta ${PORT}`);
