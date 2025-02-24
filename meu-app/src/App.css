@@ -1,0 +1,181 @@
+/* styles.css */
+
+/* Reset básico e fontes */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  
+  /* Variáveis de cores */
+  :root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --background: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --message-user-bg: #e0f2fe;
+    --message-bot-bg: #f1f5f9;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 1rem;
+  }
+  
+  /* Container principal */
+  div {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2.5rem;
+  }
+  
+  /* Área de input */
+  input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin: 1rem 0;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  /* Resposta do bot */
+  p {
+    background-color: var(--message-bot-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  /* Histórico de mensagens */
+  h2 {
+    color: var(--primary-color);
+    margin: 2rem 0 1rem;
+    font-size: 1.5rem;
+  }
+  
+  ul {
+    list-style: none;
+    background-color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  li {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: var(--message-user-bg);
+  }
+  
+  li:nth-child(even) {
+    background-color: var(--message-bot-bg);
+  }
+  
+  strong {
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Responsividade */
+  @media (min-width: 640px) {
+    body {
+      padding: 2rem;
+    }
+  
+    input {
+      width: calc(100% - 150px);
+      margin-right: 1rem;
+    }
+  
+    button {
+      width: 140px;
+      margin-bottom: 0;
+    }
+  
+    ul {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Loading Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+  }
+  
+  /* Loader animation */
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Desabilitar interação durante loading */
+  button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+  }
+  
+  button:disabled:hover {
+    background-color: #94a3b8;
+  }
