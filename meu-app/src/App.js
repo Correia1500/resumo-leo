@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import './App.css';
 function App() {
   const [input, setInput] = useState('');
   const [botResponse, setBotResponse] = useState('');
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMessages = async () => {
     try {
@@ -21,6 +22,7 @@ function App() {
 
   const handleSendMessage = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch('http://localhost:4000/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -34,11 +36,18 @@ function App() {
       fetchMessages();
     } catch (err) {
       console.error('Erro ao enviar mensagem:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
+      {isLoading && (
+        <div className="overlay">
+          <div className="loader"></div>
+        </div>
+      )}
       <h1>Chat com n8n + Flowise</h1>
 
       <input
@@ -46,7 +55,12 @@ function App() {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Digite algo"
       />
-      <button onClick={handleSendMessage}>Enviar</button>
+      <button 
+        onClick={handleSendMessage}
+        disabled={isLoading} // Desabilita botão durante loading
+      >
+        {isLoading ? 'Processando...' : 'Enviar'}
+      </button>
 
       <p>Bot disse: {botResponse}</p>
 

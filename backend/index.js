@@ -15,7 +15,7 @@ app.post('/send-message', async (req, res) => {
         const { userMessage } = req.body;
         
         // Chamar o n8n
-        const N8N_WEBHOOK_URL = 'http://n8n:5678/webhook-test/resumo';
+        const N8N_WEBHOOK_URL = 'http://n8n:5678/webhook/resumo';
         const response = await axios.post(N8N_WEBHOOK_URL, { message: userMessage });
 
         const botResponse = response.data.text || 'Sem resposta do n8n';
